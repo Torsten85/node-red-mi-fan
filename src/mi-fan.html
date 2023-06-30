@@ -1,0 +1,32 @@
+<script type="text/x-red" data-template-name="mi-fan">
+  <div class="form-row">
+    <label for="node-input-fan"><i class="fa fa-tag"></i> Fan</label>
+    <input type="text" id="node-input-fan">
+  </div>
+</script>
+
+
+<script type="text/javascript">
+  RED.nodes.registerType('mi-fan', {
+    category: 'Mi',
+    color: 'white',
+    defaults: {
+      fan: { value: '', type: 'mi-fan-config' }
+    },
+    align: 'left',
+    inputs: 1,
+    outputs: 1,
+    label() {
+      return this.name || 'Fan'
+    },
+    paletteLabel() {
+      return 'Fan'
+    },
+    inputLabels() {
+      return 'Input'
+    },
+    outputLabels() {
+      return 'Output'
+    },
+  })
+</script>

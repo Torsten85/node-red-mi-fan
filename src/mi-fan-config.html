@@ -1,0 +1,23 @@
+<script type="text/html" data-template-name="mi-fan-config">
+  <div class="form-row">
+      <label for="node-config-input-ip"><i class="fa fa-bookmark"></i> IP</label>
+      <input type="text" id="node-config-input-ip">
+  </div>
+  <div class="form-row">
+      <label for="node-config-input-token"><i class="fa fa-bookmark"></i> Token</label>
+      <input type="text" id="node-config-input-token">
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('mi-fan-config', {
+    category: 'config',
+    defaults: {
+      ip: { value: '', required: true, validate: RED.validators.regex(/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/) },
+      token: { value: '', required: true },
+    },
+    label() {
+      return this.ip;
+    }
+  });
+</script>

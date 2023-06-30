@@ -1,0 +1,48 @@
+{
+  "name": "@torsten85/node-red-mi-fan",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "node-red": "node-red -u ./dev/user -s ./dev/settings.js",
+    "dev": "pushd dev/user && npm rm @torsten85/node-red-mi-fan && npm i ../../ && popd && npm run node-red"
+  },
+  "keywords": [],
+  "author": "Torsten",
+  "license": "ISC",
+  "node-red": {
+    "nodes": {
+      "mi-fan": "./src/mi-fan.js",
+      "mi-fan-config": "./src/mi-fan-config.js",
+      "mi-fan-status": "./src/mi-fan-status.js"
+    }
+  },
+  "devDependencies": {
+    "@regrapes/eslint-config": "^1.10.0",
+    "node-red": "^3.0.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@regrapes/eslint-config/rules/base",
+      "@regrapes/eslint-config/rules/prettier"
+    ],
+    "rules": {
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/consistent-type-imports": "warn",
+      "@typescript-eslint/no-shadow": "off",
+      "no-restricted-syntax": "off",
+      "class-methods-use-this": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "no-dupe-class-members": "off",
+      "consistent-return": "off",
+      "@typescript-eslint/no-var-requires": "off"
+    }
+  },
+  "prettier": "@regrapes/eslint-config/prettier",
+  "dependencies": {
+    "miio": "^0.15.6",
+    "zod": "^3.21.4"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}
