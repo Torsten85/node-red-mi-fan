@@ -14,7 +14,18 @@ const properties = {
 
 const setOnlyProperties = ['setMove']
 
+function withRetry(createPromise, retries = 3) {
+  return createPromise().catch(error => {
+    if (retries > 1) {
+      return withRetry(createPromise, retries - 1)
+    }
+    throw error
+  })
+}
+
 module.exports = {
+  withRetry,
+
   setProperties(device, props) {
     const did = device.id.replace(/^miio:/, '')
 

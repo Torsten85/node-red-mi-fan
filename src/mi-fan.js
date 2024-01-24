@@ -1,6 +1,6 @@
 const z = require('zod')
 
-const { setProperties } = require('./utils')
+const { setProperties, withRetry } = require('./utils')
 
 const inputSchema = z.object({
   power: z.boolean().optional(),
@@ -24,7 +24,13 @@ module.exports = RED => {
 
     this.on('input', async (msg, _send, done) => {
       const parsedMsg = inputSchema.parse(msg.payload)
-      const device = await fan.getDevice()
+      let device
+      try {
+        device = await withRetry(() => fan.getDevice())
+      } catch (error) {
+        done(error)
+        return
+      }
 
       const { mode, setMove, ...props } = parsedMsg
       if (mode) {
@@ -34,8 +40,12 @@ module.exports = RED => {
       if (setMove) {
         props.setMove = setMove === 'left' ? 1 : 2
       }
-
-      await setProperties(device, props)
+      try {
+        await withRetry(() => setProperties(device, props))
+      } catch (error) {
+        done(error)
+        return
+      }
       done()
     })
   }

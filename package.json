@@ -1,6 +1,6 @@
 {
   "name": "@torsten85/node-red-mi-fan",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "",
   "scripts": {
     "node-red": "node-red -u ./dev/user -s ./dev/settings.js",

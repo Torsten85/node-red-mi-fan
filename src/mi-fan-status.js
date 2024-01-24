@@ -1,4 +1,4 @@
-const { getAllProperties } = require('./utils')
+const { getAllProperties, withRetry } = require('./utils')
 
 module.exports = RED => {
   function MiFanStatus(config) {
@@ -7,10 +7,25 @@ module.exports = RED => {
     const fan = RED.nodes.getNode(config.fan)
 
     this.on('input', async (_msg, send, done) => {
-      const device = await fan.getDevice()
+      let device
+      try {
+        device = await withRetry(() => fan.getDevice())
+      } catch (error) {
+        done(error)
+        return
+      }
+
+      let payload
+      try {
+        payload = await withRetry(() => getAllProperties(device))
+      } catch (error) {
+        done(error)
+        return
+      }
       send({
-        payload: await getAllProperties(device),
+        payload,
       })
+
       done()
     })
   }
